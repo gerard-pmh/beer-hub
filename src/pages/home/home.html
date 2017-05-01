@@ -5,8 +5,9 @@
     </ion-title>
   </ion-navbar>
   <ion-toolbar color="primary">
-    <ion-searchbar>
-
+    <ion-searchbar
+      [(ngModel)]="beer.name"
+      (ionInput)="onInput($event)">
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
@@ -17,32 +18,14 @@
     <ion-spinner name="dots"></ion-spinner>
   </div>-->
 
-  <ion-card>
+  <ion-card *ngFor="let bar of bars">
     <ion-item>
       <ion-icon item-left name="beer" class="primary"></ion-icon>
-      <h1>une bière</h1>
-      <h2>sa marque</h2>
-    </ion-item>
-  </ion-card>
-  <ion-card>
-    <ion-item>
-      <ion-icon item-left name="beer"></ion-icon>
-      <h1>une bière</h1>
-      <h2>sa marque</h2>
-    </ion-item>
-  </ion-card>
-  <ion-card>
-    <ion-item>
-      <ion-icon item-left name="beer"></ion-icon>
-      <h1>une bière</h1>
-      <h2>sa marque</h2>
-    </ion-item>
-  </ion-card>
-  <ion-card>
-    <ion-item>
-      <ion-icon item-left name="beer"></ion-icon>
-      <h1>une bière</h1>
-      <h2>sa marque</h2>
+      <h1>{{ bar.name }}</h1>
+      <h2 item-right>{{ bar.type }}</h2>
+      <h3 *ngFor="let beer of bar.beers">
+        {{ beer.name }}
+      </h3>
     </ion-item>
   </ion-card>
 
