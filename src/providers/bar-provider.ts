@@ -20,8 +20,7 @@ export class BarProvider {
   public getBars(coords: Coordinates, size: number, beers: Beer[]): Observable<Bar[]> {
     let url = `${this.overpassUrl};node(${coords.printBox(size)})`;
     beers.forEach(beer => {
-      let capitalizedBeerName = beer.name.charAt(0).toUpperCase() + beer.name.slice(1).toLowerCase();
-      url += `['brewery'~'${capitalizedBeerName}']`;
+      url += `['brewery'~'${beer.name}',i]`;
     });
     url += ';out;';
     return this.http.get(url)

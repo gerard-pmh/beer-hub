@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Geolocation } from '@ionic-native/geolocation';
 import { BarProvider } from '../../providers/bar-provider';
 import { Coordinates } from '../../models/coordinates';
 import { Beer } from '../../models/beer';
@@ -6,10 +7,8 @@ import { Bar } from '../../models/bar';
 
 
 
-// A extraire du GPS
-let coords = new Coordinates(48.85, 2.35);
 // A configurer en m par l'utilisateur
-let size = 0.05;
+let size = 0.01;
 
 
 
@@ -23,15 +22,25 @@ export class HomePage {
   public loading: boolean = false;
 
   constructor(
-      private barProvider: BarProvider
+    private geolocation: Geolocation,
+    private barProvider: BarProvider
   ) { }
 
   onInput() {
     if (this.beer.name.length > 2) {
       this.loading = true;
-      this.barProvider.getBars(coords, size, [this.beer]).subscribe(bars => {
-        this.bars = bars;
+      this.geolocation.getCurrentPosition().then(res => {
+        this.barProvider.getBars(
+          new Coordinates(res.coords.latitude, res.coords.longitude),
+          size,
+          [this.beer]
+        ).subscribe(bars => {
+          this.bars = bars;
+          this.loading = false;
+        });
+      }).catch(error => {
         this.loading = false;
+        // alerte toast sur le GPS
       });
     }
   }
