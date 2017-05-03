@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { Content } from 'ionic-angular';
+import { Component } from '@angular/core';
 import { BarProvider } from '../../providers/bar-provider';
 import { Coordinates } from '../../models/coordinates';
 import { Beer } from '../../models/beer';
@@ -18,8 +17,6 @@ let size = 0.05;
   templateUrl: 'home.html'
 })
 export class HomePage {
-
-  @ViewChild(Content) content: Content;
 
   public beer: Beer = new Beer('');
   public bars: Bar[] = [];
